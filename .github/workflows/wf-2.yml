@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+
+name: wf-2
+
+# Controls when the workflow will run - the trigger
+on:
+  # manually trigger the workflow
+  workflow_dispatch:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  start-k8s-cluster:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Kubernetes tools
+        run: |
+          curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/local/bin/kubectl
+          curl -Lo kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
+          chmod +x kind
+          sudo mv kind /usr/local/bin/kind
+      - name: Create Kubernetes cluster
+        run: kind create cluster
+      - name: Get cluster info
+        run: kubectl cluster-info
