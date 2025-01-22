@@ -22,6 +22,13 @@ jobs:
         run: echo "foo"
       - name: echo bar
         run: echo "bar"
+  second-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo baz - multilne script
+        run: |
+          echo "First output"
+          echo "Second output"
 
 
 
