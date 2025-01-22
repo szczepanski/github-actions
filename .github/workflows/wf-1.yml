@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: echo foo
-        run: echo "foo"
+        run: echo "on-push-foo"
       - name: echo bar
         run: echo "bar"
   second-job:
